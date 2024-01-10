@@ -5,7 +5,7 @@ import { urlApi } from "../config/axios"
 import { CustomButton } from "../Components/CustomButton"
 import { Toaster, toast } from 'sonner'
 import { BiCheck } from 'react-icons/bi'
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 
 
@@ -58,6 +58,7 @@ export const FormRegistration = () => {
   const handleGenderSelection = (e) => {
     setSelectedGender(e.target.value)
   }
+  const navigate = useNavigate()
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -66,27 +67,22 @@ export const FormRegistration = () => {
     setErrors(formErrors);
 
     if (Object.keys(formErrors).length === 0) {
-      console.log("Formulario válido, se puede enviar: ", formState);
       try {
         const response = await urlApi.post('/client/create', formState);
-
         if (response.status === 201) {
-          console.log('Datos enviados exitosamente al servidor');
           toast('Cliente creado con éxito', {
             description: '¿Deseas crear un Número de Cuenta para este cliente?',
             icon: <BiCheck style={{ color: 'green', fontSize: '1.5rem' }} />,
             action: {
               label: "Crear Número de Cuenta",
               onClick: () => {
-                <Link to="/clients" />
+                navigate('/clients')
               }
             }
           })
-          // Realizar acciones adicionales si la respuesta es exitosa (estado 201)
 
         } else {
           console.error('Error al enviar datos al servidor:', response.statusText);
-          // Puedes manejar otros códigos de estado aquí si es necesario
         }
       } catch (error) {
         console.error('Error al enviar datos al servidor:', error);
@@ -97,8 +93,9 @@ export const FormRegistration = () => {
   };
 
   return (
-    <section className='w-full mt-14 flex items-center justify-center' >
-      <div className='w-[725px] flex flex-col gap-6 bg-slate-300 rounded-xl p-8'>
+    <section className='w-full px-8 flex items-center justify-center flex-col' >
+      <h2 className='flex my-4 self-start text-2xl font-bold'>Bienvenido</h2>
+      <div className='w-[725px] flex flex-col gap-6 bg-slate-300 p-8 border-2 rounded-md shadow-xl border-azul-oscuro'>
         <form className='grid grid-cols-2 gap-6' onSubmit={onSubmit} >
           <div className='flex flex-col'>
             <label htmlFor="firstName">Nombre(s)</label>

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { CustomButton } from "./CustomButton";
 import getClientData from "../config/getClientsData";
 import updateClientData from "../config/updateClientData";
+import { Toaster, toast } from "sonner";
 
 export const CustomerDataTable = () => {
   const [clientData, setClientData] = useState([])
@@ -39,14 +40,20 @@ export const CustomerDataTable = () => {
 
       //Lógica para poder enviar el numero de cuenta al backend y quede almacenado
       await updateClientData(clientId, accountNumber);
+      toast.success('Número de cuenta enviado con éxito al servidor', {
+        autoClose: 4200, 
+      });
     } catch (error) {
       console.error("Error al enviar número de cuenta:", error);
+      toast.error('Error al enviar el número de cuenta. Por favor, intenta nuevamente', {
+        autoClose: 4200,
+      });
     }
   };
 
   return (
     <div className="py-8 px-4 mx-auto max-w-screen-lg">
-      <h1 className="text-2xl font-bold mb-4">Tabla de clientes</h1>
+      <h2 className="text-2xl font-bold mb-4">Tabla de clientes</h2>
       <div className="overflow-x-auto bg-blue-200">
         <table className="min-w-full table-auto">
           <thead className="bg-gray-200 text-gray-700">
@@ -85,6 +92,7 @@ export const CustomerDataTable = () => {
           </tbody>
         </table>
       </div>
+      <Toaster />
     </div>
   );
 };
