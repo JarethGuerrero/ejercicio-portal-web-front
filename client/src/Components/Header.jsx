@@ -7,9 +7,9 @@ export const Header = ({ pageTitle }) => {
         <header className='p-4 flex items-center justify-between '>
             <Link to="/" className='flex-1 flex gap-3 items-center'>
                 <img className='w-7' src={bancoIcon} alt="Portal Bancario" />
-                <span>{pageTitle}</span>
+                <span>Mi Banco</span>
             </Link>
-            <h1 className='flex-1 text-center font-sans'>Cliente</h1>
+            <h1 className='flex-1 text-center font-sans'>{pageTitle}</h1>
             <ul className='flex-1 justify-end flex'>
                 <li className='flex gap-4'>
                     <Link to="/clients">Cuentas creadas</Link>
